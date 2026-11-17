@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Ink & Ideas{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="logo" href="{{ url_for('home') }}"><span class="logo-mark">i</span> Ink & Ideas</a>
+      <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        {% if session.get('user_id') %}
+          <a href="{{ url_for('create_post') }}">Write</a>
+          <span class="hello">Hi, {{ session.get('username') }}</span>
+          <form class="inline-form" action="{{ url_for('logout') }}" method="post"><button class="nav-button" type="submit">Log out</button></form>
+        {% else %}
+          <a href="{{ url_for('login') }}">Log in</a>
+          <a class="nav-join" href="{{ url_for('register') }}">Join</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}{% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>Ink & Ideas <span>·</span> A simple place to share your thoughts</footer>
+</body>
+</html>

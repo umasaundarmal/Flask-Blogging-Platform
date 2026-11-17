@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }} | Ink & Ideas{% endblock %}
+{% block content %}
+<section class="editor-page">
+  <a class="back-link" href="{{ url_for('home') }}">← Back to stories</a>
+  <p class="eyebrow">YOUR VOICE MATTERS</p><h1>{{ page_title }}.</h1>
+  <p class="form-intro">Take your time. A good story begins with an idea.</p>
+  <form class="main-form editor-form" method="post">
+    <label for="title">Article title</label>
+    <input id="title" name="title" maxlength="140" required value="{{ post.title if post else '' }}" placeholder="Give your story a title">
+    <label for="content">Your article</label>
+    <textarea id="content" name="content" rows="14" required placeholder="Start writing here...">{{ post.content if post else '' }}</textarea>
+    <button class="button full" type="submit">{% if post %}Save changes{% else %}Publish article{% endif %} <span>→</span></button>
+  </form>
+</section>
+{% endblock %}
